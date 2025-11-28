@@ -5,7 +5,7 @@ gem "rails", "~> 8.0.2", ">= 8.0.2.1"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "bootsnap", require: false
-gem "sidekiq", "~> 7.0"
+gem "sidekiq", "~> 8.0"
 gem "redis", "~> 5.0"
 gem "mail", "~> 2.8"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
