@@ -8,12 +8,7 @@ Bundler.require(*Rails.groups)
 
 module C2sTechTest
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
-
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
@@ -23,5 +18,16 @@ module C2sTechTest
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.autoload_paths += %W(#{config.root}/app/parsers)
+    config.eager_load_paths += %W(#{config.root}/app/parsers)
+
+    config.autoload_paths += %W(#{config.root}/app/presenters)
+    config.eager_load_paths += %W(#{config.root}/app/presenters)
+
+    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
+    config.i18n.available_locales = [:en]
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
   end
 end
