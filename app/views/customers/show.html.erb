@@ -1,0 +1,19 @@
+<% content_for :title, "#{@record.name} - #{t('.title')}" %>
+
+<div class="row mb-3">
+  <div class="col">
+    <%= link_to customers_path, class: "btn btn-outline-secondary" do %>
+      <i class="bi bi-arrow-left"></i> <%= t('.back') %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'details', customer: @record %>
+  </div>
+
+  <div class="col-md-4">
+    <%= render 'processing_history', records: @records %>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<%= turbo_frame_tag dom_id(parser_record) do %>
+  <tr>
+    <td>
+      <i class="bi bi-file-earmark-text"></i>
+      <strong><%= parser_record.filename %></strong>
+    </td>
+    <td>
+      <%= parser_record.sender.presence || content_tag(:span, t('common.n_a'), class: "text-muted") %>
+    </td>
+    <td>
+      <% if parser_record.parser_used.present? %>
+        <code><%= parser_record.parser_used %></code>
+      <% else %>
+        <span class="text-muted"><%= t('common.n_a') %></span>
+      <% end %>
+    </td>
+    <td>
+      <%= status_badge(parser_record.status) %>
+    </td>
+    <td>
+      <% if parser_record.customer.present? %>
+        <%= link_to parser_record.customer.name, customer_path(parser_record.customer), class: "text-decoration-none" %>
+      <% else %>
+        <span class="text-muted"><%= t('common.n_a') %></span>
+      <% end %>
+    </td>
+    <td>
+      <small><%= time_ago_in_words(parser_record.created_at) %> <%= t('common.time.ago') %></small>
+    </td>
+    <td>
+      <%= link_to parser_record_path(parser_record), class: "btn btn-sm btn-outline-primary" do %>
+        <i class="bi bi-eye"></i> <%= t('common.buttons.view') %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

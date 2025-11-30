@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <%= link_to t('.brand'), root_path, class: "navbar-brand" %>
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="<%= t('.toggle_navigation') %>">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <%= render 'layouts/nav_item',
+                   path: root_path,
+                   icon: 'house-door',
+                   text: t('.nav.dashboard') %>
+
+        <%= render 'layouts/nav_item',
+                   path: new_email_path,
+                   icon: 'upload',
+                   text: t('.nav.upload_email') %>
+
+        <%= render 'layouts/nav_item',
+                   path: customers_path,
+                   icon: 'people',
+                   text: t('.nav.customers') %>
+
+        <%= render 'layouts/nav_item',
+                   path: parser_records_path,
+                   icon: 'file-text',
+                   text: t('.nav.processing_logs') %>
+      </ul>
+    </div>
+  </div>
+</nav>

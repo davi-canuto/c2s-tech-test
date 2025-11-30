@@ -1,0 +1,12 @@
+<% content_for :title, t('.title') %>
+<%= render 'header', pagy: @pagy %>
+
+<div class="row">
+  <div class="col">
+    <% if @records.any? %>
+      <%= render 'table', records: @records, pagy: @pagy %>
+    <% else %>
+      <%= render 'empty_state' %>
+    <% end %>
+  </div>
+</div>

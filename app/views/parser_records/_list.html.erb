@@ -1,0 +1,32 @@
+<%= turbo_frame_tag "parser_records" do %>
+  <% if @records.any? %>
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th><%= t('parser_records.table.headers.filename') %></th>
+                <th><%= t('parser_records.table.headers.sender') %></th>
+                <th><%= t('parser_records.table.headers.parser_used') %></th>
+                <th><%= t('parser_records.table.headers.status') %></th>
+                <th><%= t('parser_records.table.headers.customer') %></th>
+                <th><%= t('parser_records.table.headers.created_at') %></th>
+                <th><%= t('parser_records.table.headers.actions') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @records %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-center mt-3">
+          <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%= render "empty_state" %>
+  <% end %>
+<% end %>

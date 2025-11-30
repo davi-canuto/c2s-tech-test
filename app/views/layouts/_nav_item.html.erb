@@ -1,0 +1,5 @@
+<li class="nav-item">
+  <%= link_to path, class: "nav-link #{'active' if current_page?(path)}" do %>
+    <i class="bi bi-<%= icon %>"></i> <%= text %>
+  <% end %>
+</li>

@@ -1,0 +1,125 @@
+<% content_for :title, "#{t('.title')} - Email Parser" %>
+
+<div class="row mb-4">
+  <div class="col">
+    <h1 class="display-5"><%= t('.title') %></h1>
+    <p class="text-muted"><%= t('.subtitle') %></p>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="card bg-primary text-white">
+      <div class="card-body">
+        <h5 class="card-title"><%= t('.stats.total_customers') %></h5>
+        <p class="card-text display-4"><%= @presenter.total_customers %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-info text-white">
+      <div class="card-body">
+        <h5 class="card-title"><%= t('.stats.total_processed') %></h5>
+        <p class="card-text display-4"><%= @presenter.total_records %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-success text-white">
+      <div class="card-body">
+        <h5 class="card-title"><%= t('.stats.successful') %></h5>
+        <p class="card-text display-4"><%= @presenter.successful_records %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-danger text-white">
+      <div class="card-body">
+        <h5 class="card-title"><%= t('.stats.failed') %></h5>
+        <p class="card-text display-4"><%= @presenter.failed_records %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><%= t('.recent.customers_title') %></h5>
+        <%= link_to t('.recent.view_all'), customers_path, class: "btn btn-sm btn-primary" %>
+      </div>
+      <div class="card-body">
+        <% if @presenter.recent_customers.any? %>
+          <div class="list-group list-group-flush">
+            <% @presenter.recent_customers.each do |customer| %>
+              <%= link_to customer_path(customer), class: "list-group-item list-group-item-action" do %>
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1"><%= customer.name %></h6>
+                  <small class="text-muted"><%= time_ago_in_words(customer.created_at) %> <%= t('common.time.ago') %></small>
+                </div>
+                <p class="mb-1">
+                  <% if customer.email.present? %>
+                    <i class="bi bi-envelope"></i> <%= customer.email %>
+                  <% end %>
+                  <% if customer.phone.present? %>
+                    <i class="bi bi-telephone"></i> <%= customer.phone %>
+                  <% end %>
+                </p>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted"><%= t('.recent.no_customers') %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><%= t('.recent.records_title') %></h5>
+        <%= link_to t('.recent.view_all'), parser_records_path, class: "btn btn-sm btn-primary" %>
+      </div>
+      <div class="card-body">
+        <% if @presenter.recent_records.any? %>
+          <div class="list-group list-group-flush">
+            <% @presenter.recent_records.each do |record| %>
+              <%= link_to parser_record_path(record), class: "list-group-item list-group-item-action" do %>
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1"><%= record.filename %></h6>
+                  <%= status_badge(record.status) %>
+                </div>
+                <p class="mb-1 text-muted">
+                  <small>
+                    <%= time_ago_in_words(record.created_at) %> <%= t('common.time.ago') %>
+                    <% if record.sender.present? %>
+                      | <%= t('.recent.sender_prefix') %> <%= record.sender %>
+                    <% end %>
+                  </small>
+                </p>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted"><%= t('.recent.no_records') %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="card bg-light">
+      <div class="card-body text-center">
+        <h5><%= t('.cta.title') %></h5>
+        <p class="text-muted"><%= t('.cta.subtitle') %></p>
+        <%= link_to new_email_path, class: "btn btn-primary btn-lg" do %>
+          <i class="bi bi-upload"></i> <%= t('.cta.upload_button') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<tr>
+  <td><strong><%= customer.name %></strong></td>
+  <td>
+    <% if customer.email.present? %>
+      <i class="bi bi-envelope"></i> <%= customer.email %>
+    <% else %>
+      <span class="text-muted"><%= t('customers.common.not_available') %></span>
+    <% end %>
+  </td>
+  <td>
+    <% if customer.phone.present? %>
+      <i class="bi bi-telephone"></i> <%= customer.phone %>
+    <% else %>
+      <span class="text-muted"><%= t('customers.common.not_available') %></span>
+    <% end %>
+  </td>
+  <td>
+    <% if customer.product_code.present? %>
+      <span class="badge bg-info"><%= customer.product_code %></span>
+    <% else %>
+      <span class="text-muted"><%= t('customers.common.not_available') %></span>
+    <% end %>
+  </td>
+  <td>
+    <% if customer.email_subject.present? %>
+      <%= truncate(customer.email_subject, length: 40) %>
+    <% else %>
+      <span class="text-muted"><%= t('customers.common.not_available') %></span>
+    <% end %>
+  </td>
+  <td>
+    <small><%= t('customers.common.time_ago', time: time_ago_in_words(customer.created_at)) %></small>
+  </td>
+  <td>
+    <%= link_to customer_path(customer), class: "btn btn-sm btn-outline-primary" do %>
+      <i class="bi bi-eye"></i> <%= t('customers.table.actions.view') %>
+    <% end %>
+  </td>
+</tr>

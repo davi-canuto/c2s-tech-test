@@ -1,0 +1,165 @@
+<% content_for :title, "Processing Log - #{@record.filename}" %>
+
+<div class="row mb-3">
+  <div class="col">
+    <%= link_to parser_records_path, class: "btn btn-outline-secondary" do %>
+      <i class="bi bi-arrow-left"></i> Back to Logs
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card mb-4">
+      <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="mb-0"><i class="bi bi-file-earmark-text"></i> Processing Details</h4>
+          <% badge_class = case @record.status
+               when 'success' then 'bg-success'
+               when 'failed' then 'bg-danger'
+               when 'processing' then 'bg-warning'
+               else 'bg-secondary'
+             end %>
+          <span class="badge <%= badge_class %> fs-6">
+            <%= @record.status.titleize %>
+          </span>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th style="width: 30%;">Filename</th>
+              <td><strong><%= @record.filename %></strong></td>
+            </tr>
+            <tr>
+              <th>Sender</th>
+              <td>
+                <% if @record.sender.present? %>
+                  <%= @record.sender %>
+                <% else %>
+                  <span class="text-muted">Not identified</span>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th>Parser Used</th>
+              <td>
+                <% if @record.parser_used.present? %>
+                  <code><%= @record.parser_used %></code>
+                <% else %>
+                  <span class="text-muted">Not assigned</span>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th>Status</th>
+              <td>
+                <span class="badge <%= badge_class %>">
+                  <%= @record.status.titleize %>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>Created At</th>
+              <td><%= @record.created_at.strftime("%B %d, %Y at %I:%M %p") %></td>
+            </tr>
+            <tr>
+              <th>Updated At</th>
+              <td><%= @record.updated_at.strftime("%B %d, %Y at %I:%M %p") %></td>
+            </tr>
+            <tr>
+              <th>Customer</th>
+              <td>
+                <% if @record.customer.present? %>
+                  <%= link_to @record.customer.name, customer_path(@record.customer), class: "btn btn-sm btn-outline-primary" %>
+                <% else %>
+                  <span class="text-muted">No customer created</span>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <% if @record.error_message.present? %>
+      <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+          <h5 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Error Message</h5>
+        </div>
+        <div class="card-body">
+          <pre class="mb-0 text-danger"><%= @record.error_message %></pre>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @record.extracted_data.present? && @record.extracted_data.any? %>
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="bi bi-database"></i> Extracted Data</h5>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <tbody>
+              <% @record.extracted_data.each do |key, value| %>
+                <tr>
+                  <th style="width: 30%;"><%= key.titleize %></th>
+                  <td>
+                    <% if value.present? %>
+                      <%= value %>
+                    <% else %>
+                      <span class="text-muted">Empty</span>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-paperclip"></i> Email File</h5>
+      </div>
+      <div class="card-body">
+        <% if @record.email_file.attached? %>
+          <div class="d-grid">
+            <%= link_to rails_blob_path(@record.email_file, disposition: "attachment"), class: "btn btn-primary mb-2" do %>
+              <i class="bi bi-download"></i> Download File
+            <% end %>
+          </div>
+          <div class="mt-3">
+            <small class="text-muted">
+              <strong>Filename:</strong> <%= @record.email_file.filename %><br>
+              <strong>Size:</strong> <%= number_to_human_size(@record.email_file.byte_size) %><br>
+              <strong>Type:</strong> <%= @record.email_file.content_type %>
+            </small>
+          </div>
+        <% else %>
+          <p class="text-muted">No file attached</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-info-circle"></i> Quick Actions</h5>
+      </div>
+      <div class="card-body">
+        <div class="d-grid gap-2">
+          <%= link_to new_email_path, class: "btn btn-outline-primary" do %>
+            <i class="bi bi-upload"></i> Upload New Email
+          <% end %>
+          <%= link_to customers_path, class: "btn btn-outline-secondary" do %>
+            <i class="bi bi-people"></i> View All Customers
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

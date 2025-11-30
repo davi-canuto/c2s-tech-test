@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-body">
+    <%= search_form_for @q, url: parser_records_path, method: :get,
+                        data: { turbo_frame: "parser_records" },
+                        html: { class: "row g-3" } do |f| %>
+      <div class="col-md-4">
+        <%= f.label :status_eq, t('common.labels.filter_by_status'), class: "form-label" %>
+        <%= f.select :status_eq, status_options, {}, class: "form-select" %>
+      </div>
+
+      <div class="col-md-4">
+        <%= f.label :sender_eq, t('common.labels.filter_by_sender'), class: "form-label" %>
+        <%= f.select :sender_eq,
+            [[t('common.labels.all_senders'), '']] + @senders.map { |s| [s, s] },
+            {},
+            class: "form-select" %>
+      </div>
+
+      <div class="col-md-4 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary me-2">
+          <i class="bi bi-funnel"></i> <%= t('common.buttons.apply_filters') %>
+        </button>
+        <%= link_to parser_records_path, class: "btn btn-outline-secondary", data: { turbo_frame: "parser_records" } do %>
+          <i class="bi bi-x-circle"></i> <%= t('common.buttons.clear') %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
