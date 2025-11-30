@@ -1,0 +1,35 @@
+en:
+  customers:
+    index:
+      title: "Customers"
+      subtitle: "List of customers extracted from email processing"
+      total_count: "Total Customers: %{count}"
+      upload_new: "Upload New Email"
+      empty:
+        title: "No customers yet"
+        message: "Upload an email file to start extracting customer information"
+        action: "Upload Email"
+
+    show:
+      title: "Customer Details"
+      back: "Back to Customers"
+      details_card_title: "Customer Details"
+      processing_history_title: "Processing History"
+      no_records: "No processing records found"
+
+    table:
+      headers:
+        name: "Name"
+        email: "Email"
+        phone: "Phone"
+        product_code: "Product Code"
+        email_subject: "Email Subject"
+        created_at: "Created At"
+        actions: "Actions"
+      actions:
+        view: "View"
+
+    common:
+      not_available: "N/A"
+      not_provided: "Not provided"
+      time_ago: "%{time} ago"

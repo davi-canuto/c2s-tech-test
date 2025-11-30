@@ -1,0 +1,27 @@
+en:
+  activerecord:
+    models:
+      customer:
+        one: "Customer"
+        other: "Customers"
+
+    attributes:
+      customer:
+        name: "Name"
+        email: "Email"
+        phone: "Phone"
+        address: "Address"
+        parser_records: "Parser Records"
+        created_at: "Created At"
+        updated_at: "Updated At"
+
+    errors:
+      models:
+        customer:
+          attributes:
+            name:
+              blank: "can't be blank"
+            email:
+              invalid: "is not a valid email"
+            base:
+              at_least_one_contact: "Must have at least email or phone"

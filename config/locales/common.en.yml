@@ -1,0 +1,32 @@
+en:
+  common:
+    buttons:
+      apply_filters: "Apply Filters"
+      clear: "Clear"
+      submit: "Submit"
+      cancel: "Cancel"
+      view: "View"
+      upload: "Upload"
+      back: "Back"
+      edit: "Edit"
+      delete: "Delete"
+
+    labels:
+      all_statuses: "All Statuses"
+      all_senders: "All Senders"
+      filter_by_status: "Filter by Status"
+      filter_by_sender: "Filter by Sender"
+
+    statuses:
+      pending: "Pending"
+      processing: "Processing"
+      success: "Success"
+      failed: "Failed"
+
+    time:
+      ago: "ago"
+
+    empty:
+      no_results: "No results found"
+
+    n_a: "N/A"

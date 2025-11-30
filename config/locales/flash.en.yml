@@ -1,0 +1,16 @@
+en:
+  flash:
+    emails:
+      file_required: "Please select an .eml file"
+      invalid_format: "Only .eml files are accepted"
+      file_too_large: "File is too large. Maximum size is %{max_size}"
+      upload_success: "Email file uploaded successfully and queued for processing"
+      upload_failed: "Failed to upload file: %{errors}"
+
+    actions:
+      created: "%{resource} was successfully created."
+      updated: "%{resource} was successfully updated."
+      destroyed: "%{resource} was successfully destroyed."
+      create_failed: "Failed to create %{resource}."
+      update_failed: "Failed to update %{resource}."
+      destroy_failed: "Failed to destroy %{resource}."

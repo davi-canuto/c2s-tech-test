@@ -1,0 +1,21 @@
+en:
+  emails:
+    new:
+      title: "Upload Email"
+      card_title: "Upload Email File (.eml)"
+      description: "Upload an .eml file to extract customer information. The file will be processed in the background and you'll be able to view the results in the processing logs."
+      form:
+        label: "Select .eml file"
+        help_text: "Only .eml files are accepted. Maximum file size: 10MB"
+        submit: "Upload and Process"
+      how_it_works:
+        title: "How it works"
+        steps:
+          upload: "<strong>Upload:</strong> Select and upload an .eml file"
+          processing: "<strong>Processing:</strong> The system will process the email in the background"
+          extraction: "<strong>Extraction:</strong> Customer information will be extracted based on the email format"
+          storage: "<strong>Storage:</strong> If successful, a new customer record will be created"
+          logs: "<strong>Logs:</strong> All processing attempts are logged for your review"
+        required_info:
+          title: "Required Information:"
+          message: "The email must contain at least one contact method (email or phone) for processing to be successful."

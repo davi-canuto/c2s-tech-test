@@ -1,0 +1,30 @@
+en:
+  activerecord:
+    models:
+      parser_record:
+        one: "Parser Record"
+        other: "Parser Records"
+
+    attributes:
+      parser_record:
+        filename: "Filename"
+        sender: "Sender"
+        receiver: "Receiver"
+        subject: "Subject"
+        body: "Body"
+        parser_used: "Parser Used"
+        status: "Status"
+        error_message: "Error Message"
+        customer: "Customer"
+        email_file: "Email File"
+        created_at: "Created At"
+        updated_at: "Updated At"
+
+    errors:
+      models:
+        parser_record:
+          attributes:
+            filename:
+              blank: "can't be blank"
+            status:
+              blank: "can't be blank"

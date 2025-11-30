@@ -1,0 +1,26 @@
+en:
+  parser_records:
+    index:
+      title: "Processing Logs"
+      subtitle: "View all email processing attempts and their results"
+      empty:
+        title: "No processing logs yet"
+        message: "Upload an email file to start processing"
+        upload_button: "Upload Email"
+
+    show:
+      title: "Parser Record Details"
+      back: "Back to list"
+      details: "Details"
+      email_content: "Email Content"
+      error_details: "Error Details"
+
+    table:
+      headers:
+        filename: "Filename"
+        sender: "Sender"
+        parser_used: "Parser Used"
+        status: "Status"
+        customer: "Customer"
+        created_at: "Created At"
+        actions: "Actions"

@@ -1,0 +1,24 @@
+en:
+  dashboard:
+    index:
+      title: "Dashboard"
+      subtitle: "Monitor and manage email processing"
+
+      stats:
+        total_customers: "Total Customers"
+        total_processed: "Total Processed"
+        successful: "Successful"
+        failed: "Failed"
+
+      recent:
+        customers_title: "Recent Customers"
+        records_title: "Recent Processing Logs"
+        view_all: "View All"
+        no_customers: "No customers yet"
+        no_records: "No processing records yet"
+        sender_prefix: "Sender:"
+
+      cta:
+        title: "Ready to process emails?"
+        subtitle: "Upload .eml files to extract customer information"
+        upload_button: "Upload Email"

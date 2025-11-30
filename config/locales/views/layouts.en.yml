@@ -1,0 +1,12 @@
+en:
+  layouts:
+    application:
+      title: "Email Parser - C2S Tech Test"
+    navbar:
+      brand: "Email Parser"
+      toggle_navigation: "Toggle navigation"
+      nav:
+        dashboard: "Dashboard"
+        upload_email: "Upload Email"
+        customers: "Customers"
+        processing_logs: "Processing Logs"
