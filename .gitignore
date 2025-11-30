@@ -35,3 +35,16 @@
 
 # asdf configuration file
 .tool-versions
+
+# Test coverage reports
+/coverage/
+/coverage.data
+*.coverage
+
+# RSpec temporary files
+/spec/examples.txt
+/spec/reports/
+
+# Ignore uploaded test files
+/spec/fixtures/files/
+/spec/support/uploads/
