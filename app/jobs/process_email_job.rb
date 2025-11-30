@@ -7,15 +7,11 @@ class ProcessEmailJob < ApplicationJob
     return unless parser_record.status_pending?
     return unless parser_record.email_file.attached?
 
-    # Update status to processing
     parser_record.update!(status: :processing)
-
-    # Download the file and process
     parser_record.email_file.open do |file|
       service = ProcessEmail.new(file, filename: parser_record.filename)
       service.call
 
-      # Update the parser_record with results
       if service.success?
         parser_record.update!(
           status: :success,
