@@ -13,7 +13,7 @@ gem "cssbundling-rails", "~> 1.4"
 gem "importmap-rails", "~> 2.0"
 gem "stimulus-rails", "~> 1.3"
 gem "turbo-rails", "~> 2.0"
-gem "pagy", "~> 9.0"
+gem "pagy", "~> 43.1"
 gem "ransack", "~> 4.0"
 
 group :development, :test do
