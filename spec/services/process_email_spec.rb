@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ProcessEmail do
-  let(:email_file) { File.open(Rails.root.join("spec/emails/email1.eml")) }
+  let(:email_file) { File.open(Rails.root.join("spec/fixtures/emails/email1.eml")) }
   let(:service) { described_class.new(email_file) }
 
   describe "#call" do
@@ -42,7 +42,7 @@ RSpec.describe ProcessEmail do
     end
 
     context "with a valid email from Partner B" do
-      let(:email_file) { File.open(Rails.root.join("spec/emails/email4.eml")) }
+      let(:email_file) { File.open(Rails.root.join("spec/fixtures/emails/email4.eml")) }
 
       it "creates a customer with Partner B data" do
         customer = service.call
@@ -58,7 +58,7 @@ RSpec.describe ProcessEmail do
     end
 
     context "with an incomplete email (no contact info)" do
-      let(:email_file) { File.open(Rails.root.join("spec/emails/email7.eml")) }
+      let(:email_file) { File.open(Rails.root.join("spec/fixtures/emails/email7.eml")) }
 
       it "does not create a customer" do
         expect {

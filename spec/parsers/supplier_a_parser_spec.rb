@@ -18,7 +18,7 @@ RSpec.describe Parsers::SupplierAParser do
 
   describe '#parse' do
     context 'with email1 (complete with all fields)' do
-      let(:email_file) { File.read(Rails.root.join('spec/emails/email1.eml')) }
+      let(:email_file) { File.read(Rails.root.join('spec/fixtures/emails/email1.eml')) }
       let(:mail) { Mail.read_from_string(email_file) }
       let(:parser) { described_class.new(mail) }
 
@@ -40,7 +40,7 @@ RSpec.describe Parsers::SupplierAParser do
     end
 
     context 'with email2 (complete with different format)' do
-      let(:email_file) { File.read(Rails.root.join('spec/emails/email2.eml')) }
+      let(:email_file) { File.read(Rails.root.join('spec/fixtures/emails/email2.eml')) }
       let(:mail) { Mail.read_from_string(email_file) }
       let(:parser) { described_class.new(mail) }
 
@@ -56,7 +56,7 @@ RSpec.describe Parsers::SupplierAParser do
     end
 
     context 'with email3 (valid - has email but no phone)' do
-      let(:email_file) { File.read(Rails.root.join('spec/emails/email3.eml')) }
+      let(:email_file) { File.read(Rails.root.join('spec/fixtures/emails/email3.eml')) }
       let(:mail) { Mail.read_from_string(email_file) }
       let(:parser) { described_class.new(mail) }
 
@@ -72,7 +72,7 @@ RSpec.describe Parsers::SupplierAParser do
     end
 
     context 'with email7 (incomplete - no contact info)' do
-      let(:email_file) { File.read(Rails.root.join('spec/emails/email7.eml')) }
+      let(:email_file) { File.read(Rails.root.join('spec/fixtures/emails/email7.eml')) }
       let(:mail) { Mail.read_from_string(email_file) }
       let(:parser) { described_class.new(mail) }
 
@@ -90,7 +90,7 @@ RSpec.describe Parsers::SupplierAParser do
   end
 
   describe 'extraction methods' do
-    let(:email_file) { File.read(Rails.root.join('spec/emails/email1.eml')) }
+    let(:email_file) { File.read(Rails.root.join('spec/fixtures/emails/email1.eml')) }
     let(:mail) { Mail.read_from_string(email_file) }
     let(:parser) { described_class.new(mail) }
 
