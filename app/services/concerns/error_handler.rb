@@ -55,7 +55,7 @@ module ErrorHandler
   def default_error_message(exception)
     case exception
     when ActiveRecord::RecordInvalid
-      exception.record.errors.full_messages.join(', ')
+      exception.record.errors.full_messages.join(", ")
     when ActiveRecord::RecordNotFound
       "Record not found"
     else

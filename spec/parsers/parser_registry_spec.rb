@@ -10,7 +10,6 @@ RSpec.describe Parsers::ParserRegistry do
     it "does not register duplicates" do
       initial_count = described_class.parsers.count
       described_class.register(Parsers::SupplierAParser)
-      
       expect(described_class.parsers.count).to eq(initial_count)
     end
   end

@@ -19,14 +19,14 @@ module C2sTechTest
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.autoload_paths += %W(#{config.root}/app/parsers)
-    config.eager_load_paths += %W(#{config.root}/app/parsers)
+    config.autoload_paths += %W[#{config.root}/app/parsers]
+    config.eager_load_paths += %W[#{config.root}/app/parsers]
 
-    config.autoload_paths += %W(#{config.root}/app/presenters)
-    config.eager_load_paths += %W(#{config.root}/app/presenters)
+    config.autoload_paths += %W[#{config.root}/app/presenters]
+    config.eager_load_paths += %W[#{config.root}/app/presenters]
 
     config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
-    config.i18n.available_locales = [:en]
+    config.i18n.available_locales = [ :en ]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
   end

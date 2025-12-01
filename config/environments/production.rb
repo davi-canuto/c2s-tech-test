@@ -47,8 +47,8 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   # Use Redis for caching
-  config.cache_store = :redis_cache_store, { 
-    url: ENV.fetch("REDIS_URL") 
+  config.cache_store = :redis_cache_store, {
+    url: ENV.fetch("REDIS_URL")
   }
 
   # Use Sidekiq for background jobs

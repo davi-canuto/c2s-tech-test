@@ -7,7 +7,7 @@ class EmailsController < ApplicationController
     result = service.call
 
     if result
-      flash[:notice] = t('flash.emails.upload_success')
+      flash[:notice] = t("flash.emails.upload_success")
       redirect_to parser_records_path
     else
       flash[:alert] = service.error_message

@@ -23,7 +23,7 @@ module Parsers
       match = body.match(/Telefone:\s*(.+?)(?:\n|$)/i)
       return nil unless match
 
-      phone = match[1].gsub(/[^\d]/, '')
+      phone = match[1].gsub(/[^\d]/, "")
       phone.present? ? phone : nil
     end
 

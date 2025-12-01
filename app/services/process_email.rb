@@ -25,10 +25,10 @@ class ProcessEmail
 
     create_customer_and_log(extracted_data, sender, parser_class, mail)
   rescue Mail::Field::ParseError => e
-    handle_error(e, context: { filename: @filename, step: 'mail_parsing' })
+    handle_error(e, context: { filename: @filename, step: "mail_parsing" })
     log_failure("Email format error: #{e.message}")
   rescue StandardError => e
-    handle_error(e, context: { filename: @filename, step: 'email_processing' })
+    handle_error(e, context: { filename: @filename, step: "email_processing" })
     log_failure("Unexpected error: #{e.message}")
   end
 
@@ -47,7 +47,7 @@ class ProcessEmail
     log_error(e, context: { filename: @filename })
     raise
   rescue StandardError => e
-    log_error(e, context: { filename: @filename, step: 'mail_reading' })
+    log_error(e, context: { filename: @filename, step: "mail_reading" })
     nil
   end
 
@@ -142,11 +142,11 @@ class ProcessEmail
   def create_parser_record(**attributes)
     ParserRecord.create!(attributes)
   rescue ActiveRecord::RecordInvalid => e
-    log_error(e, context: { attributes: attributes, step: 'parser_record_creation' })
+    log_error(e, context: { attributes: attributes, step: "parser_record_creation" })
     # Fallback: create without raising
     ParserRecord.create(attributes.merge(error_message: "Record creation failed: #{e.message}"))
   rescue StandardError => e
-    log_error(e, context: { attributes: attributes, step: 'parser_record_creation' })
+    log_error(e, context: { attributes: attributes, step: "parser_record_creation" })
     nil
   end
 
@@ -162,7 +162,7 @@ class ProcessEmail
       content_type: "message/rfc822"
     )
   rescue StandardError => e
-    log_error(e, context: { filename: @filename, step: 'file_attachment' })
+    log_error(e, context: { filename: @filename, step: "file_attachment" })
   end
 
   def prepare_io_for_attachment
@@ -173,7 +173,7 @@ class ProcessEmail
       StringIO.new(@email_file.read)
     end
   rescue StandardError => e
-    log_error(e, context: { filename: @filename, step: 'io_preparation' })
+    log_error(e, context: { filename: @filename, step: "io_preparation" })
     nil
   end
 end
