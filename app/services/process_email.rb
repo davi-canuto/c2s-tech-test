@@ -1,4 +1,6 @@
 class ProcessEmail
+  include ErrorHandler
+
   attr_reader :parser_record, :customer
 
   def initialize(email_file, filename: nil)
@@ -22,7 +24,11 @@ class ProcessEmail
     return log_failure_with_parser(parser_class, sender, extracted_data) unless extracted_data
 
     create_customer_and_log(extracted_data, sender, parser_class, mail)
-  rescue => e
+  rescue Mail::Field::ParseError => e
+    handle_error(e, context: { filename: @filename, step: 'mail_parsing' })
+    log_failure("Email format error: #{e.message}")
+  rescue StandardError => e
+    handle_error(e, context: { filename: @filename, step: 'email_processing' })
     log_failure("Unexpected error: #{e.message}")
   end
 
@@ -37,16 +43,19 @@ class ProcessEmail
     return nil unless content
 
     Mail.read_from_string(content)
-  rescue => e
-    Rails.logger.error "Failed to parse mail: #{e.message}"
+  rescue Mail::Field::ParseError => e
+    log_error(e, context: { filename: @filename })
+    raise
+  rescue StandardError => e
+    log_error(e, context: { filename: @filename, step: 'mail_reading' })
     nil
   end
 
   def extract_content(file)
-    case file
-    when ->(f) { f.respond_to?(:read) } then file.read
-    when String then file
-    else nil
+    if file.respond_to?(:read)
+      file.read
+    elsif file.is_a?(String)
+      file
     end
   end
 
@@ -93,7 +102,7 @@ class ProcessEmail
   end
 
   def log_success(sender:, parser:, data:, customer:)
-    @parser_record = ParserRecord.create!(
+    @parser_record = create_parser_record(
       filename: @filename,
       sender: sender,
       parser_used: parser,
@@ -107,7 +116,7 @@ class ProcessEmail
   end
 
   def log_failure(error, sender: "unknown", parser: nil, data: nil)
-    @parser_record = ParserRecord.create!(
+    @parser_record = create_parser_record(
       filename: @filename,
       sender: sender,
       parser_used: parser,
@@ -130,6 +139,17 @@ class ProcessEmail
     )
   end
 
+  def create_parser_record(**attributes)
+    ParserRecord.create!(attributes)
+  rescue ActiveRecord::RecordInvalid => e
+    log_error(e, context: { attributes: attributes, step: 'parser_record_creation' })
+    # Fallback: create without raising
+    ParserRecord.create(attributes.merge(error_message: "Record creation failed: #{e.message}"))
+  rescue StandardError => e
+    log_error(e, context: { attributes: attributes, step: 'parser_record_creation' })
+    nil
+  end
+
   def attach_file_to_record
     return unless @parser_record && @email_file
 
@@ -141,19 +161,19 @@ class ProcessEmail
       filename: @filename,
       content_type: "message/rfc822"
     )
-  rescue => e
-    Rails.logger.error "Failed to attach file: #{e.message}"
+  rescue StandardError => e
+    log_error(e, context: { filename: @filename, step: 'file_attachment' })
   end
 
   def prepare_io_for_attachment
-    case @email_file
-    when ->(f) { f.respond_to?(:tempfile) }
+    if @email_file.respond_to?(:tempfile)
       @email_file.tempfile
-    when ->(f) { f.respond_to?(:read) }
+    elsif @email_file.respond_to?(:read)
       @email_file.rewind if @email_file.respond_to?(:rewind)
       StringIO.new(@email_file.read)
-    else
-      nil
     end
+  rescue StandardError => e
+    log_error(e, context: { filename: @filename, step: 'io_preparation' })
+    nil
   end
 end
