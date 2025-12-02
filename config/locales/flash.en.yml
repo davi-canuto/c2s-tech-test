@@ -9,6 +9,10 @@ en:
       reprocess_started: "Email reprocessing started successfully"
       reprocess_failed: "Failed to reprocess email: %{error}"
 
+    customers:
+      destroyed: "Customer was successfully deleted"
+      destroy_failed: "Failed to delete customer"
+
     medias:
 
     actions:

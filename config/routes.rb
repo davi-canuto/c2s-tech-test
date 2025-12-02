@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       post :reprocess
     end
   end
-  resources :customers, only: [ :index, :show ]
+  resources :customers, only: [ :index, :show, :destroy ]
   resources :parser_records, only: [ :index, :show ]
   resources :medias, only: [ :index, :show ]
 end

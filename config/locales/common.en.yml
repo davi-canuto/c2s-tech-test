@@ -1,5 +1,10 @@
 en:
   common:
+    search: "Search"
+    clear: "Clear"
+    time_ago: "%{time} ago"
+    actions: "Actions"
+
     buttons:
       apply_filters: "Apply Filters"
       clear: "Clear"

@@ -1,9 +1,9 @@
-<% content_for :title, "Email File - #{@media.filename}" %>
+<% content_for :title, "#{t('medias.show.title')} - #{@media.filename}" %>
 
 <div class="row mb-3">
   <div class="col">
     <%= link_to medias_path, class: "btn btn-outline-secondary" do %>
-      <i class="bi bi-arrow-left"></i> Back to Email Files
+      <i class="bi bi-arrow-left"></i> <%= t("medias.show.back_button") %>
     <% end %>
   </div>
 </div>
@@ -12,59 +12,59 @@
   <div class="col-lg-8">
     <div class="card mb-4">
       <div class="card-header">
-        <h4 class="mb-0"><i class="bi bi-envelope"></i> Email Details</h4>
+        <h4 class="mb-0"><i class="bi bi-envelope"></i> <%= t("medias.show.email_details.title") %></h4>
       </div>
       <div class="card-body">
         <table class="table table-bordered">
           <tbody>
             <tr>
-              <th style="width: 30%;">Filename</th>
+              <th style="width: 30%;"><%= t("medias.show.email_details.filename") %></th>
               <td><strong><%= @media.filename %></strong></td>
             </tr>
             <tr>
-              <th>Sender</th>
+              <th><%= t("medias.show.email_details.sender") %></th>
               <td>
                 <% if @media.sender.present? %>
                   <%= @media.sender %>
                 <% else %>
-                  <span class="text-muted">Not processed yet</span>
+                  <span class="text-muted"><%= t("medias.show.email_details.not_processed") %></span>
                 <% end %>
               </td>
             </tr>
             <tr>
-              <th>Subject</th>
+              <th><%= t("medias.show.email_details.subject") %></th>
               <td>
                 <% if @media.subject.present? %>
                   <%= @media.subject %>
                 <% else %>
-                  <span class="text-muted">Not processed yet</span>
+                  <span class="text-muted"><%= t("medias.show.email_details.not_processed") %></span>
                 <% end %>
               </td>
             </tr>
             <tr>
-              <th>Original Date</th>
+              <th><%= t("medias.show.email_details.original_date") %></th>
               <td>
                 <% if @media.original_date.present? %>
                   <%= @media.original_date.strftime("%B %d, %Y at %I:%M %p") %>
                 <% else %>
-                  <span class="text-muted">Not processed yet</span>
+                  <span class="text-muted"><%= t("medias.show.email_details.not_processed") %></span>
                 <% end %>
               </td>
             </tr>
             <tr>
-              <th>File Size</th>
+              <th><%= t("medias.show.email_details.file_size") %></th>
               <td><%= number_to_human_size(@media.file_size) %></td>
             </tr>
             <tr>
-              <th>Content Type</th>
+              <th><%= t("medias.show.email_details.content_type") %></th>
               <td><code><%= @media.content_type %></code></td>
             </tr>
             <tr>
-              <th>Checksum (MD5)</th>
+              <th><%= t("medias.show.email_details.checksum") %></th>
               <td><code><%= @media.checksum %></code></td>
             </tr>
             <tr>
-              <th>Uploaded At</th>
+              <th><%= t("medias.show.email_details.uploaded_at") %></th>
               <td><%= @media.created_at.strftime("%B %d, %Y at %I:%M %p") %></td>
             </tr>
           </tbody>
@@ -74,7 +74,7 @@
 
     <div class="card">
       <div class="card-header">
-        <h5 class="mb-0"><i class="bi bi-file-text"></i> Processing History</h5>
+        <h5 class="mb-0"><i class="bi bi-file-text"></i> <%= t("medias.show.processing_history.title") %></h5>
       </div>
       <div class="card-body">
         <% if @parser_records.any? %>
@@ -82,11 +82,11 @@
             <table class="table table-sm">
               <thead>
                 <tr>
-                  <th>Status</th>
-                  <th>Parser Used</th>
-                  <th>Customer</th>
-                  <th>Processed At</th>
-                  <th>Actions</th>
+                  <th><%= t("medias.show.processing_history.columns.status") %></th>
+                  <th><%= t("medias.show.processing_history.columns.parser_used") %></th>
+                  <th><%= t("medias.show.processing_history.columns.customer") %></th>
+                  <th><%= t("medias.show.processing_history.columns.processed_at") %></th>
+                  <th><%= t("medias.show.processing_history.columns.actions") %></th>
                 </tr>
               </thead>
               <tbody>
@@ -100,7 +100,7 @@
                            else 'bg-secondary'
                          end %>
                       <span class="badge <%= badge_class %>">
-                        <%= record.status.titleize %>
+                        <%= t("common.statuses.#{record.status}") %>
                       </span>
                     </td>
                     <td>
@@ -114,13 +114,13 @@
                       <% if record.customer.present? %>
                         <%= link_to record.customer.name, customer_path(record.customer), class: "btn btn-sm btn-outline-primary" %>
                       <% else %>
-                        <span class="text-muted">None</span>
+                        <span class="text-muted"><%= t("medias.show.processing_history.no_customer") %></span>
                       <% end %>
                     </td>
-                    <td><%= time_ago_in_words(record.created_at) %> ago</td>
+                    <td><%= t("common.time_ago", time: time_ago_in_words(record.created_at)) %></td>
                     <td>
                       <%= link_to parser_record_path(record), class: "btn btn-sm btn-outline-secondary" do %>
-                        <i class="bi bi-eye"></i> Details
+                        <i class="bi bi-eye"></i> <%= t("medias.show.processing_history.details_button") %>
                       <% end %>
                     </td>
                   </tr>
@@ -129,7 +129,7 @@
             </table>
           </div>
         <% else %>
-          <p class="text-muted mb-0">No processing logs yet. Click "Reprocess Email" to start processing this file.</p>
+          <p class="text-muted mb-0"><%= t("medias.show.processing_history.empty") %></p>
         <% end %>
       </div>
     </div>
@@ -138,45 +138,45 @@
   <div class="col-lg-4">
     <div class="card mb-3">
       <div class="card-header">
-        <h5 class="mb-0"><i class="bi bi-paperclip"></i> File Actions</h5>
+        <h5 class="mb-0"><i class="bi bi-paperclip"></i> <%= t("medias.show.file_actions.title") %></h5>
       </div>
       <div class="card-body">
         <% if @media.file.attached? %>
           <div class="d-grid gap-2">
             <%= link_to rails_blob_path(@media.file, disposition: "attachment"), class: "btn btn-primary" do %>
-              <i class="bi bi-download"></i> Download File
+              <i class="bi bi-download"></i> <%= t("medias.show.file_actions.download") %>
             <% end %>
-            <%= button_to reprocess_email_path(@media), method: :post, class: "btn btn-success", data: { turbo_confirm: "Are you sure you want to reprocess this email?" } do %>
-              <i class="bi bi-arrow-repeat"></i> Reprocess Email
+            <%= button_to reprocess_email_path(@media), method: :post, class: "btn btn-success", data: { turbo_confirm: t("medias.show.file_actions.reprocess_confirm") } do %>
+              <i class="bi bi-arrow-repeat"></i> <%= t("medias.show.file_actions.reprocess") %>
             <% end %>
           </div>
           <div class="mt-3">
             <small class="text-muted">
-              <strong>Filename:</strong> <%= @media.file.filename %><br>
-              <strong>Size:</strong> <%= number_to_human_size(@media.file.byte_size) %><br>
-              <strong>Type:</strong> <%= @media.file.content_type %>
+              <strong><%= t("medias.show.file_actions.file_info.filename") %></strong> <%= @media.file.filename %><br>
+              <strong><%= t("medias.show.file_actions.file_info.size") %></strong> <%= number_to_human_size(@media.file.byte_size) %><br>
+              <strong><%= t("medias.show.file_actions.file_info.type") %></strong> <%= @media.file.content_type %>
             </small>
           </div>
         <% else %>
-          <p class="text-muted">No file attached</p>
+          <p class="text-muted"><%= t("medias.show.file_actions.no_file") %></p>
         <% end %>
       </div>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <h5 class="mb-0"><i class="bi bi-info-circle"></i> Quick Actions</h5>
+        <h5 class="mb-0"><i class="bi bi-info-circle"></i> <%= t("medias.show.quick_actions.title") %></h5>
       </div>
       <div class="card-body">
         <div class="d-grid gap-2">
           <%= link_to new_email_path, class: "btn btn-outline-primary" do %>
-            <i class="bi bi-upload"></i> Upload New Email
+            <i class="bi bi-upload"></i> <%= t("medias.show.quick_actions.upload_new") %>
           <% end %>
           <%= link_to parser_records_path, class: "btn btn-outline-secondary" do %>
-            <i class="bi bi-file-text"></i> View All Logs
+            <i class="bi bi-file-text"></i> <%= t("medias.show.quick_actions.view_logs") %>
           <% end %>
           <%= link_to customers_path, class: "btn btn-outline-secondary" do %>
-            <i class="bi bi-people"></i> View All Customers
+            <i class="bi bi-people"></i> <%= t("medias.show.quick_actions.view_customers") %>
           <% end %>
         </div>
       </div>

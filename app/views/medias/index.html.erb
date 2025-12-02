@@ -1,9 +1,9 @@
-<% content_for :title, "Email Files - Email Parser" %>
+<% content_for :title, t("medias.index.title") %>
 
 <div class="row mb-4">
   <div class="col">
-    <h1 class="display-6"><i class="bi bi-envelope-fill"></i> Email Files</h1>
-    <p class="text-muted">Manage and reprocess stored email files (.eml)</p>
+    <h1 class="display-6"><i class="bi bi-envelope-fill"></i> <%= t("medias.index.title") %></h1>
+    <p class="text-muted"><%= t("medias.index.subtitle") %></p>
   </div>
 </div>
 
@@ -13,22 +13,22 @@
       <div class="card-body">
         <div class="row g-3">
           <div class="col-md-4">
-            <%= f.label :filename_cont, "Filename", class: "form-label" %>
-            <%= f.search_field :filename_cont, class: "form-control", placeholder: "Search by filename..." %>
+            <%= f.label :filename_cont, t("medias.index.filters.filename"), class: "form-label" %>
+            <%= f.search_field :filename_cont, class: "form-control", placeholder: t("medias.index.filters.filename") + "..." %>
           </div>
           <div class="col-md-4">
-            <%= f.label :sender_cont, "Sender", class: "form-label" %>
-            <%= f.search_field :sender_cont, class: "form-control", placeholder: "Search by sender..." %>
+            <%= f.label :sender_cont, t("medias.index.filters.sender"), class: "form-label" %>
+            <%= f.search_field :sender_cont, class: "form-control", placeholder: t("medias.index.filters.sender") + "..." %>
           </div>
           <div class="col-md-4">
-            <%= f.label :subject_cont, "Subject", class: "form-label" %>
-            <%= f.search_field :subject_cont, class: "form-control", placeholder: "Search by subject..." %>
+            <%= f.label :subject_cont, t("medias.index.filters.subject"), class: "form-label" %>
+            <%= f.search_field :subject_cont, class: "form-control", placeholder: t("medias.index.filters.subject") + "..." %>
           </div>
         </div>
         <div class="row mt-3">
           <div class="col">
-            <%= f.submit "Search", class: "btn btn-primary" %>
-            <%= link_to "Clear", medias_path, class: "btn btn-outline-secondary" %>
+            <%= f.submit t("common.search"), class: "btn btn-primary" %>
+            <%= link_to t("common.clear"), medias_path, class: "btn btn-outline-secondary" %>
           </div>
         </div>
       </div>
@@ -45,13 +45,13 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>Filename</th>
-                  <th>Sender</th>
-                  <th>Subject</th>
-                  <th>Size</th>
-                  <th>Processing Logs</th>
-                  <th>Created</th>
-                  <th>Actions</th>
+                  <th><%= t("medias.index.columns.filename") %></th>
+                  <th><%= t("medias.index.columns.sender") %></th>
+                  <th><%= t("medias.index.columns.subject") %></th>
+                  <th><%= t("medias.index.columns.size") %></th>
+                  <th><%= t("medias.index.columns.processing_logs") %></th>
+                  <th><%= t("medias.index.columns.created") %></th>
+                  <th><%= t("medias.index.columns.actions") %></th>
                 </tr>
               </thead>
               <tbody>
@@ -76,12 +76,12 @@
                     </td>
                     <td><%= number_to_human_size(media.file_size) %></td>
                     <td>
-                      <span class="badge bg-secondary"><%= media.parser_records.count %> logs</span>
+                      <span class="badge bg-secondary"><%= t("medias.index.logs_count", count: media.parser_records.count) %></span>
                     </td>
-                    <td><%= time_ago_in_words(media.created_at) %> ago</td>
+                    <td><%= t("common.time_ago", time: time_ago_in_words(media.created_at)) %></td>
                     <td>
                       <%= link_to media_path(media), class: "btn btn-sm btn-outline-primary" do %>
-                        <i class="bi bi-eye"></i> View
+                        <i class="bi bi-eye"></i> <%= t("medias.index.view_button") %>
                       <% end %>
                     </td>
                   </tr>
@@ -98,10 +98,10 @@
       <div class="card">
         <div class="card-body text-center py-5">
           <i class="bi bi-inbox display-1 text-muted"></i>
-          <h3 class="mt-3">No email files found</h3>
-          <p class="text-muted">Upload your first email to get started</p>
+          <h3 class="mt-3"><%= t("medias.index.empty_state.title") %></h3>
+          <p class="text-muted"><%= t("medias.index.empty_state.subtitle") %></p>
           <%= link_to new_email_path, class: "btn btn-primary mt-3" do %>
-            <i class="bi bi-upload"></i> Upload Email
+            <i class="bi bi-upload"></i> <%= t("medias.index.empty_state.upload_button") %>
           <% end %>
         </div>
       </div>

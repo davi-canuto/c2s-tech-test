@@ -14,6 +14,8 @@ en:
     show:
       title: "Customer Details"
       back: "Back to Customers"
+      delete: "Delete Customer"
+      delete_confirm: "Are you sure you want to delete this customer? This action cannot be undone."
       details_card_title: "Customer Details"
       processing_history_title: "Processing History"
       no_records: "No processing records found"
@@ -29,6 +31,7 @@ en:
         actions: "Actions"
       actions:
         view: "View"
+        delete_confirm: "Are you sure you want to delete this customer?"
 
     common:
       not_available: "N/A"

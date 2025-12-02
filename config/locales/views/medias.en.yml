@@ -4,6 +4,9 @@ en:
       title: "Email Files"
       subtitle: "Manage and reprocess stored email files (.eml)"
       search_placeholder: "Search email files..."
+      logs_count:
+        one: "%{count} log"
+        other: "%{count} logs"
       filters:
         filename: "Filename"
         sender: "Sender"
@@ -38,6 +41,8 @@ en:
       processing_history:
         title: "Processing History"
         empty: "No processing logs yet. Click 'Reprocess Email' to start processing this file."
+        no_customer: "None"
+        details_button: "Details"
         columns:
           status: "Status"
           parser_used: "Parser Used"

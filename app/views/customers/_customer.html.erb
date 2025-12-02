@@ -32,8 +32,13 @@
     <small><%= t('customers.common.time_ago', time: time_ago_in_words(customer.created_at)) %></small>
   </td>
   <td>
-    <%= link_to customer_path(customer), class: "btn btn-sm btn-outline-primary" do %>
-      <i class="bi bi-eye"></i> <%= t('customers.table.actions.view') %>
-    <% end %>
+    <div class="btn-group" role="group">
+      <%= link_to customer_path(customer), class: "btn btn-sm btn-outline-primary" do %>
+        <i class="bi bi-eye"></i> <%= t('customers.table.actions.view') %>
+      <% end %>
+      <%= button_to customer_path(customer), method: :delete, class: "btn btn-sm btn-outline-danger", data: { turbo_confirm: t('customers.table.actions.delete_confirm') } do %>
+        <i class="bi bi-trash"></i>
+      <% end %>
+    </div>
   </td>
 </tr>

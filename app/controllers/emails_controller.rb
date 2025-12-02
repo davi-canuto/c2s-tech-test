@@ -18,15 +18,14 @@ class EmailsController < ApplicationController
   end
 
   def reprocess
-    parser_record = ParserRecord.create!(
-      filename: @media.filename,
-      status: :pending,
-      media: @media
-    )
+    service = ReprocessEmailService.new(media: @media)
+    result = service.call
 
-    redirect_to media_path(@media), notice: t("flash.emails.reprocess_started")
-  rescue ActiveRecord::RecordInvalid => e
-    redirect_to media_path(@media), alert: "Failed to reprocess: #{e.message}"
+    if result
+      redirect_to media_path(@media), notice: t("flash.emails.reprocess_started")
+    else
+      redirect_to media_path(@media), alert: service.error_message
+    end
   end
 
   private
