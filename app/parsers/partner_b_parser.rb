@@ -1,5 +1,5 @@
 class PartnerBParser < BaseParser
-  SENDER_PATTERN = /@parceiroB\.com/i
+  SENDER_PATTERN = /@(?:[a-zA-Z0-9-]+\.)*parceiroB\.com$/i
 
   def self.can_parse?(sender_email)
     sender_email.to_s.match?(SENDER_PATTERN)
@@ -29,7 +29,7 @@ class PartnerBParser < BaseParser
   def extract_product_code
     body = email_body
     match = body.match(/(?:Produto(?:\s+de\s+interesse)?|Código\s+do\s+produto):\s*([A-Z0-9\-]+)/i)
-    return match[1].strip if match
+    return match[1].strip.upcase if match
 
     subject = mail_object.subject
     match = subject.match(/(PROD-\d{3})/i)

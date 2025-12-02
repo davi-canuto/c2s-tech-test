@@ -1,5 +1,5 @@
 class SupplierAParser < BaseParser
-  SENDER_PATTERN = /@fornecedorA\.com/i
+  SENDER_PATTERN = /@(?:[a-zA-Z0-9-]+\.)*fornecedorA\.com$/i
 
   def self.can_parse?(sender_email)
     sender_email.to_s.match?(SENDER_PATTERN)
@@ -7,8 +7,11 @@ class SupplierAParser < BaseParser
 
   def extract_name
     body = email_body
-    match = body.match(/Nome(?:\s+do\s+cliente)?:\s*(.+)/i)
-    match[1].strip if match
+    match = body.match(/Nome(?:\s+do\s+cliente)?:[ \t]*([^\n]+)/i)
+    return nil unless match
+
+    name = match[1].strip
+    name.present? ? name : nil
   end
 
   def extract_email
@@ -28,6 +31,8 @@ class SupplierAParser < BaseParser
 
   def extract_product_code
     subject = mail_object.subject
+    return nil unless subject
+
     match = subject.match(/([A-Z]{3}\d{3})/i)
     match[1].upcase if match
   end
