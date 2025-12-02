@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 # ruby version setted on Dockerfile
 
-gem "rails", "~> 8.0.2", ">= 8.0.2.1"
+gem "rails", "~> 8.1.1"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "bootsnap", require: false
