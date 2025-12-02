@@ -1,6 +1,4 @@
 class Customer < ApplicationRecord
-  include Discard::Model
-
   has_many :parser_records, dependent: :nullify
 
   validates :name, presence: true

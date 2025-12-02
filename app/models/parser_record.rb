@@ -1,6 +1,4 @@
 class ParserRecord < ApplicationRecord
-  include Discard::Model
-
   belongs_to :customer, optional: true
   belongs_to :media, optional: true
   has_one_attached :email_file
