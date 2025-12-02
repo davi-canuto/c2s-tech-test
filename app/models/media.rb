@@ -1,4 +1,6 @@
 class Media < ApplicationRecord
+  include Discard::Model
+
   self.table_name = "medias"
 
   has_one_attached :file

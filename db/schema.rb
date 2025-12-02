@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_02_004826) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_02_124037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,7 +50,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_004826) do
     t.string "email_subject"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
     t.index ["created_at"], name: "index_customers_on_created_at"
+    t.index ["discarded_at"], name: "index_customers_on_discarded_at"
     t.index ["email"], name: "index_customers_on_email"
   end
 
@@ -64,7 +66,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_004826) do
     t.datetime "original_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
     t.index ["checksum"], name: "index_medias_on_checksum", unique: true
+    t.index ["discarded_at"], name: "index_medias_on_discarded_at"
   end
 
   create_table "parser_records", force: :cascade do |t|
@@ -78,8 +82,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_004826) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "media_id"
+    t.datetime "discarded_at"
     t.index ["created_at"], name: "index_parser_records_on_created_at"
     t.index ["customer_id"], name: "index_parser_records_on_customer_id"
+    t.index ["discarded_at"], name: "index_parser_records_on_discarded_at"
     t.index ["media_id"], name: "index_parser_records_on_media_id"
     t.index ["sender"], name: "index_parser_records_on_sender"
     t.index ["status"], name: "index_parser_records_on_status"

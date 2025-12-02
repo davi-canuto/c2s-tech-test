@@ -9,6 +9,8 @@ gem "redis", "~> 5.0"
 gem "mail", "~> 2.8"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "sidekiq", "~> 8.0"
+gem "sidekiq-cron", "~> 2.0"
+gem "discard", "~> 1.3"
 gem "cssbundling-rails", "~> 1.4"
 gem "importmap-rails", "~> 2.0"
 gem "stimulus-rails", "~> 1.3"
