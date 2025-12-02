@@ -19,7 +19,7 @@ gem "pagy", "~> 9.0"
 gem "ransack", "~> 4.0"
 
 group :development, :test do
-  gem "rspec-rails", "~> 6.0"
+  gem "rspec-rails", "~> 8.0"
   gem "factory_bot_rails", "~> 6.0"
   gem "faker", "~> 3.0"
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
