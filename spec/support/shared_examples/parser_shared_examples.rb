@@ -8,7 +8,7 @@ RSpec.shared_examples 'a parser' do |domain_pattern|
 
     it 'returns boolean' do
       result = described_class.can_parse?('test@example.com')
-      expect(result).to be_in([true, false])
+      expect(result).to be_in([ true, false ])
     end
 
     it 'handles nil gracefully' do
