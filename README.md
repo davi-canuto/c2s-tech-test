@@ -4,6 +4,49 @@
 
 Rails application for parsing email files (.eml) and extracting customer information using background jobs.
 
+## Getting Started
+
+### Prerequisites
+
+- Docker and Docker Compose installed
+- Git
+
+### Setup Instructions
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/davi-canuto/c2s-tech-test.git
+   cd c2s-tech-test
+   ```
+
+2. **Configure environment variables**
+   ```bash
+   cp .env.sample .env
+   ```
+
+3. **Start the application**
+   ```bash
+   make up
+   ```
+
+4. **Troubleshooting: Port 5432 already in use**
+
+   If the PostgreSQL port (5432) is already in use by another service, you'll need to stop it first:
+   ```bash
+   # On Linux/Ubuntu
+   sudo service postgresql stop
+
+   # On macOS
+   brew services stop postgresql
+
+   # Then try again
+   make up
+   ```
+
+5. **Access the application**
+
+   Open your browser and navigate to: **http://localhost:3000**
+
 ## Documentation
 
 ```bash
@@ -13,8 +56,6 @@ docker-compose up -d
 # Or using Makefile
 make up
 ```
-
-The application will be available at `http://localhost:3000`
 
 ## Services
 
