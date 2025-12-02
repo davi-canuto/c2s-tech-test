@@ -29,5 +29,8 @@ module C2sTechTest
     config.i18n.available_locales = [ :en ]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
+
+    # Configure Sidekiq as the ActiveJob queue adapter
+    config.active_job.queue_adapter = :sidekiq
   end
 end

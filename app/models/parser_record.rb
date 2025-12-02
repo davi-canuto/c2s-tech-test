@@ -1,12 +1,13 @@
 class ParserRecord < ApplicationRecord
   belongs_to :customer, optional: true
+  belongs_to :media, optional: true
   has_one_attached :email_file
 
   enum :status, {
-    pending: "pending",
-    processing: "processing",
-    success: "success",
-    failed: "failed"
+    pending: 0,
+    processing: 1,
+    success: 2,
+    failed: 3
   }, prefix: true
 
   validates :filename, presence: true
@@ -27,16 +28,15 @@ class ParserRecord < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[customer]
+    %w[customer media]
   end
 
-  before_create :set_default_status, if: -> { status.blank? }
-  after_create_commit :enqueue_processing_job, if: -> { status_pending? && email_file.attached? }
+  after_create_commit :enqueue_processing_job, if: :has_file_and_pending?
 
   private
 
-  def set_default_status
-    self.status = :pending
+  def has_file_and_pending?
+    self.status_pending? && self.media&.file&.attached?
   end
 
   def enqueue_processing_job

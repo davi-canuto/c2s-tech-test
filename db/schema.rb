@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_30_014342) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_02_004826) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -54,18 +54,33 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_30_014342) do
     t.index ["email"], name: "index_customers_on_email"
   end
 
+  create_table "medias", force: :cascade do |t|
+    t.string "filename"
+    t.bigint "file_size"
+    t.string "content_type"
+    t.string "checksum"
+    t.string "sender"
+    t.string "subject"
+    t.datetime "original_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checksum"], name: "index_medias_on_checksum", unique: true
+  end
+
   create_table "parser_records", force: :cascade do |t|
     t.string "filename", null: false
     t.string "sender"
     t.string "parser_used"
-    t.string "status", null: false
+    t.integer "status", default: 0, null: false
     t.jsonb "extracted_data", default: {}
     t.text "error_message"
     t.bigint "customer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "media_id"
     t.index ["created_at"], name: "index_parser_records_on_created_at"
     t.index ["customer_id"], name: "index_parser_records_on_customer_id"
+    t.index ["media_id"], name: "index_parser_records_on_media_id"
     t.index ["sender"], name: "index_parser_records_on_sender"
     t.index ["status"], name: "index_parser_records_on_status"
   end
@@ -73,4 +88,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_30_014342) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "parser_records", "customers"
+  add_foreign_key "parser_records", "medias"
 end

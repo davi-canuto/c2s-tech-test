@@ -1,4 +1,4 @@
-class CreateCustomer
+class CreateCustomerService
   attr_reader :customer, :errors
 
   def initialize(data)

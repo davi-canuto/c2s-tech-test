@@ -3,7 +3,12 @@ Rails.application.routes.draw do
 
   root "dashboard#index"
 
-  resources :emails, only: [ :new, :create ]
+  resources :emails, only: [ :new, :create ] do
+    member do
+      post :reprocess
+    end
+  end
   resources :customers, only: [ :index, :show ]
   resources :parser_records, only: [ :index, :show ]
+  resources :medias, only: [ :index, :show ]
 end

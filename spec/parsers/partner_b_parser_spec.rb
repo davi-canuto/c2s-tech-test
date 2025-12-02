@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Parsers::PartnerBParser do
+RSpec.describe PartnerBParser do
   describe '.can_parse?' do
     it 'returns true for emails from parceiroB.com' do
       expect(described_class.can_parse?('contato@parceiroB.com')).to be true

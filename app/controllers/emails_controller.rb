@@ -1,4 +1,6 @@
 class EmailsController < ApplicationController
+  before_action :set_media, only: [ :reprocess ]
+
   def new
   end
 
@@ -15,9 +17,25 @@ class EmailsController < ApplicationController
     end
   end
 
+  def reprocess
+    parser_record = ParserRecord.create!(
+      filename: @media.filename,
+      status: :pending,
+      media: @media
+    )
+
+    redirect_to media_path(@media), notice: t("flash.emails.reprocess_started")
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to media_path(@media), alert: "Failed to reprocess: #{e.message}"
+  end
+
   private
 
   def record_params
     params.permit(:email_file)
+  end
+
+  def set_media
+    @media = Media.find(params[:id])
   end
 end

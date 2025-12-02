@@ -8,5 +8,6 @@ en:
       nav:
         dashboard: "Dashboard"
         upload_email: "Upload Email"
+        email_files: "Email Files"
         customers: "Customers"
         processing_logs: "Processing Logs"

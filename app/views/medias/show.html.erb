@@ -1,0 +1,185 @@
+<% content_for :title, "Email File - #{@media.filename}" %>
+
+<div class="row mb-3">
+  <div class="col">
+    <%= link_to medias_path, class: "btn btn-outline-secondary" do %>
+      <i class="bi bi-arrow-left"></i> Back to Email Files
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h4 class="mb-0"><i class="bi bi-envelope"></i> Email Details</h4>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th style="width: 30%;">Filename</th>
+              <td><strong><%= @media.filename %></strong></td>
+            </tr>
+            <tr>
+              <th>Sender</th>
+              <td>
+                <% if @media.sender.present? %>
+                  <%= @media.sender %>
+                <% else %>
+                  <span class="text-muted">Not processed yet</span>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th>Subject</th>
+              <td>
+                <% if @media.subject.present? %>
+                  <%= @media.subject %>
+                <% else %>
+                  <span class="text-muted">Not processed yet</span>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th>Original Date</th>
+              <td>
+                <% if @media.original_date.present? %>
+                  <%= @media.original_date.strftime("%B %d, %Y at %I:%M %p") %>
+                <% else %>
+                  <span class="text-muted">Not processed yet</span>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th>File Size</th>
+              <td><%= number_to_human_size(@media.file_size) %></td>
+            </tr>
+            <tr>
+              <th>Content Type</th>
+              <td><code><%= @media.content_type %></code></td>
+            </tr>
+            <tr>
+              <th>Checksum (MD5)</th>
+              <td><code><%= @media.checksum %></code></td>
+            </tr>
+            <tr>
+              <th>Uploaded At</th>
+              <td><%= @media.created_at.strftime("%B %d, %Y at %I:%M %p") %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-file-text"></i> Processing History</h5>
+      </div>
+      <div class="card-body">
+        <% if @parser_records.any? %>
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Parser Used</th>
+                  <th>Customer</th>
+                  <th>Processed At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @parser_records.each do |record| %>
+                  <tr>
+                    <td>
+                      <% badge_class = case record.status
+                           when 'success' then 'bg-success'
+                           when 'failed' then 'bg-danger'
+                           when 'processing' then 'bg-warning'
+                           else 'bg-secondary'
+                         end %>
+                      <span class="badge <%= badge_class %>">
+                        <%= record.status.titleize %>
+                      </span>
+                    </td>
+                    <td>
+                      <% if record.parser_used.present? %>
+                        <code><%= record.parser_used %></code>
+                      <% else %>
+                        <span class="text-muted">-</span>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if record.customer.present? %>
+                        <%= link_to record.customer.name, customer_path(record.customer), class: "btn btn-sm btn-outline-primary" %>
+                      <% else %>
+                        <span class="text-muted">None</span>
+                      <% end %>
+                    </td>
+                    <td><%= time_ago_in_words(record.created_at) %> ago</td>
+                    <td>
+                      <%= link_to parser_record_path(record), class: "btn btn-sm btn-outline-secondary" do %>
+                        <i class="bi bi-eye"></i> Details
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <p class="text-muted mb-0">No processing logs yet. Click "Reprocess Email" to start processing this file.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-paperclip"></i> File Actions</h5>
+      </div>
+      <div class="card-body">
+        <% if @media.file.attached? %>
+          <div class="d-grid gap-2">
+            <%= link_to rails_blob_path(@media.file, disposition: "attachment"), class: "btn btn-primary" do %>
+              <i class="bi bi-download"></i> Download File
+            <% end %>
+            <%= button_to reprocess_email_path(@media), method: :post, class: "btn btn-success", data: { turbo_confirm: "Are you sure you want to reprocess this email?" } do %>
+              <i class="bi bi-arrow-repeat"></i> Reprocess Email
+            <% end %>
+          </div>
+          <div class="mt-3">
+            <small class="text-muted">
+              <strong>Filename:</strong> <%= @media.file.filename %><br>
+              <strong>Size:</strong> <%= number_to_human_size(@media.file.byte_size) %><br>
+              <strong>Type:</strong> <%= @media.file.content_type %>
+            </small>
+          </div>
+        <% else %>
+          <p class="text-muted">No file attached</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-info-circle"></i> Quick Actions</h5>
+      </div>
+      <div class="card-body">
+        <div class="d-grid gap-2">
+          <%= link_to new_email_path, class: "btn btn-outline-primary" do %>
+            <i class="bi bi-upload"></i> Upload New Email
+          <% end %>
+          <%= link_to parser_records_path, class: "btn btn-outline-secondary" do %>
+            <i class="bi bi-file-text"></i> View All Logs
+          <% end %>
+          <%= link_to customers_path, class: "btn btn-outline-secondary" do %>
+            <i class="bi bi-people"></i> View All Customers
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

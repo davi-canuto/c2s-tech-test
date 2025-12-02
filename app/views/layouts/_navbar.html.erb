@@ -24,6 +24,11 @@
                    text: t('.nav.upload_email') %>
 
         <%= render 'layouts/nav_item',
+                   path: medias_path,
+                   icon: 'envelope-fill',
+                   text: t('.nav.email_files') %>
+
+        <%= render 'layouts/nav_item',
                    path: customers_path,
                    icon: 'people',
                    text: t('.nav.customers') %>

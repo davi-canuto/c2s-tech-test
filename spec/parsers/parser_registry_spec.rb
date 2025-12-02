@@ -1,15 +1,15 @@
 require "rails_helper"
 
-RSpec.describe Parsers::ParserRegistry do
+RSpec.describe ParserRegistry do
   describe ".register" do
     it "registers a parser class" do
-      expect(described_class.parsers).to include(Parsers::SupplierAParser)
-      expect(described_class.parsers).to include(Parsers::PartnerBParser)
+      expect(described_class.parsers).to include(SupplierAParser)
+      expect(described_class.parsers).to include(PartnerBParser)
     end
 
     it "does not register duplicates" do
       initial_count = described_class.parsers.count
-      described_class.register(Parsers::SupplierAParser)
+      described_class.register(SupplierAParser)
       expect(described_class.parsers.count).to eq(initial_count)
     end
   end
@@ -17,12 +17,12 @@ RSpec.describe Parsers::ParserRegistry do
   describe ".find_parser_for" do
     it "finds SupplierAParser for fornecedorA.com emails" do
       parser_class = described_class.find_parser_for("loja@fornecedorA.com")
-      expect(parser_class).to eq(Parsers::SupplierAParser)
+      expect(parser_class).to eq(SupplierAParser)
     end
 
     it "finds PartnerBParser for parceiroB.com emails" do
       parser_class = described_class.find_parser_for("contato@parceiroB.com")
-      expect(parser_class).to eq(Parsers::PartnerBParser)
+      expect(parser_class).to eq(PartnerBParser)
     end
 
     it "returns nil for unknown senders" do
@@ -32,7 +32,7 @@ RSpec.describe Parsers::ParserRegistry do
 
     it "is case insensitive" do
       parser_class = described_class.find_parser_for("LOJA@FORNECEDORA.COM")
-      expect(parser_class).to eq(Parsers::SupplierAParser)
+      expect(parser_class).to eq(SupplierAParser)
     end
   end
 

@@ -20,6 +20,12 @@
 #   end
 #
 module ErrorHandler
+  def handle_error(exception, context: {}, user_message: nil)
+    log_error(exception, context: context)
+    @error_message = user_message || exception.message
+    nil
+  end
+
   def log_error(exception, context: {})
     Rails.logger.error format_error_message(exception, context)
 
@@ -28,38 +34,14 @@ module ErrorHandler
     # Sentry.capture_exception(exception, extra: context) if defined?(Sentry)
   end
 
-  # Handles error: logs + sets error message
-  def handle_error(exception, context: {}, user_message: nil)
-    log_error(exception, context:)
-
-    @error_message = user_message || default_error_message(exception)
-    nil
-  end
-
   private
 
   def format_error_message(exception, context)
-    message = [
-      "=" * 80,
-      "Error: #{exception.class}",
-      "Message: #{exception.message}",
-      ("Context: #{context.inspect}" if context.any?),
-      "Backtrace:",
-      exception.backtrace&.first(10)&.join("\n"),
-      "=" * 80
-    ].compact.join("\n")
-
-    message
-  end
-
-  def default_error_message(exception)
-    case exception
-    when ActiveRecord::RecordInvalid
-      exception.record.errors.full_messages.join(", ")
-    when ActiveRecord::RecordNotFound
-      "Record not found"
-    else
-      "An error occurred: #{exception.message}"
-    end
+    {
+      error_class: exception.class.name,
+      error_message: exception.message,
+      backtrace: exception.backtrace&.first(5),
+      context: context
+    }.to_json
   end
 end

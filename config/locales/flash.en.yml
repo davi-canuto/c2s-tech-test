@@ -6,6 +6,10 @@ en:
       file_too_large: "File is too large. Maximum size is %{max_size}"
       upload_success: "Email file uploaded successfully and queued for processing"
       upload_failed: "Failed to upload file: %{errors}"
+      reprocess_started: "Email reprocessing started successfully"
+      reprocess_failed: "Failed to reprocess email: %{error}"
+
+    medias:
 
     actions:
       created: "%{resource} was successfully created."

@@ -38,29 +38,51 @@ class UploadEmailService
   end
 
   def create_record_with_attachment
-    @parser_record = ParserRecord.new(
-      filename: @file.original_filename,
-      status: :pending
-    )
+    ActiveRecord::Base.transaction do
+      media = create_media_record
+      return nil unless media
 
-    attach_file(@parser_record)
+      @parser_record = ParserRecord.new(
+        filename: @file.original_filename,
+        status: :pending,
+        media:
+      )
 
-    if @parser_record.save
-      self
-    else
-      @error_message = @parser_record.errors.full_messages.join(", ")
-      nil
+      if @parser_record.save
+        self
+      else
+        @error_message = @parser_record.errors.full_messages.join(", ")
+        raise ActiveRecord::Rollback
+      end
     end
   end
 
-  def attach_file(parser_record)
-    parser_record.email_file.attach(
+  def create_media_record
+    content = @file.read
+    checksum = Digest::MD5.hexdigest(content)
+    @file.rewind
+
+    media = Media.new(
+      filename: @file.original_filename,
+      file_size: @file.size,
+      content_type: @file.content_type || "message/rfc822",
+      checksum: checksum
+    )
+
+    media.file.attach(
       io: @file.open,
       filename: @file.original_filename,
-      content_type: @file.content_type
+      content_type: @file.content_type || "message/rfc822"
     )
+
+    if media.save
+      media
+    else
+      @error_message = media.errors.full_messages.join(", ")
+      nil
+    end
   rescue StandardError => e
-    log_error(e, context: { filename: @file.original_filename, step: "file_attachment" })
+    log_error(e, context: { filename: @file.original_filename, step: "media_creation" })
     raise
   end
 

@@ -4,6 +4,7 @@ en:
       title: "Customers"
       subtitle: "List of customers extracted from email processing"
       total_count: "Total Customers: %{count}"
+      registered_subtitle: "Registered in the system"
       upload_new: "Upload New Email"
       empty:
         title: "No customers yet"

@@ -1,0 +1,23 @@
+en:
+  activerecord:
+    models:
+      media:
+        one: "Media"
+        other: "Medias"
+    attributes:
+      media:
+        filename: "Filename"
+        file_size: "File size"
+        content_type: "Content type"
+        checksum: "Checksum"
+        sender: "Sender"
+        subject: "Subject"
+        original_date: "Original date"
+        created_at: "Created at"
+        updated_at: "Updated at"
+    errors:
+      models:
+        media:
+          attributes:
+            checksum:
+              file_already_exists: "This file has already been uploaded"

@@ -127,10 +127,23 @@
         <h5 class="mb-0"><i class="bi bi-paperclip"></i> Email File</h5>
       </div>
       <div class="card-body">
-        <% if @record.email_file.attached? %>
+        <% if @record.media&.file&.attached? %>
+          <div class="d-grid">
+            <%= link_to rails_blob_path(@record.media.file, disposition: "attachment"), class: "btn btn-primary mb-2" do %>
+              <i class="bi bi-download"></i> Download File
+            <% end %>
+          </div>
+          <div class="mt-3">
+            <small class="text-muted">
+              <strong>Filename:</strong> <%= @record.media.file.filename %><br>
+              <strong>Size:</strong> <%= number_to_human_size(@record.media.file.byte_size) %><br>
+              <strong>Type:</strong> <%= @record.media.file.content_type %>
+            </small>
+          </div>
+        <% elsif @record.email_file.attached? %>
           <div class="d-grid">
             <%= link_to rails_blob_path(@record.email_file, disposition: "attachment"), class: "btn btn-primary mb-2" do %>
-              <i class="bi bi-download"></i> Download File
+              <i class="bi bi-download"></i> Download File (Legacy)
             <% end %>
           </div>
           <div class="mt-3">

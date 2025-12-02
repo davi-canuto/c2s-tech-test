@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ProcessEmail do
+RSpec.describe ProcessEmailService do
   let(:email_file) { File.open(Rails.root.join("spec/fixtures/emails/email1.eml")) }
   let(:service) { described_class.new(email_file) }
 
@@ -53,7 +53,7 @@ RSpec.describe ProcessEmail do
 
       it "uses PartnerBParser" do
         service.call
-        expect(service.parser_record.parser_used).to eq("Parsers::PartnerBParser")
+        expect(service.parser_record.parser_used).to eq("PartnerBParser")
       end
     end
 

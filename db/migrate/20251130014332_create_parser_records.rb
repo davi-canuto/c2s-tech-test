@@ -4,7 +4,7 @@ class CreateParserRecords < ActiveRecord::Migration[8.0]
       t.string :filename, null: false
       t.string :sender
       t.string :parser_used
-      t.string :status, null: false
+      t.integer :status, null: false, default: 0
       t.jsonb :extracted_data, default: {}
       t.text :error_message
       t.references :customer, null: true, foreign_key: true

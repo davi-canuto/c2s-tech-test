@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CreateCustomer do
+RSpec.describe CreateCustomerService do
   describe "#call" do
     context "with valid data" do
       let(:data) do

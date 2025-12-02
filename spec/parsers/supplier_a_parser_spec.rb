@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Parsers::SupplierAParser do
+RSpec.describe SupplierAParser do
   describe '.can_parse?' do
     it 'returns true for emails from fornecedorA.com' do
       expect(described_class.can_parse?('loja@fornecedorA.com')).to be true

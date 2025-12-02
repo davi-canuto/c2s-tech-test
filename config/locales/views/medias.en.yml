@@ -1,0 +1,61 @@
+en:
+  medias:
+    index:
+      title: "Email Files"
+      subtitle: "Manage and reprocess stored email files (.eml)"
+      search_placeholder: "Search email files..."
+      filters:
+        filename: "Filename"
+        sender: "Sender"
+        subject: "Subject"
+      columns:
+        filename: "Filename"
+        sender: "Sender"
+        subject: "Subject"
+        size: "Size"
+        processing_logs: "Processing Logs"
+        created: "Created"
+        actions: "Actions"
+      empty_state:
+        title: "No email files found"
+        subtitle: "Upload your first email to get started"
+        upload_button: "Upload Email"
+      view_button: "View"
+    show:
+      title: "Email File Details"
+      back_button: "Back to Email Files"
+      email_details:
+        title: "Email Details"
+        filename: "Filename"
+        sender: "Sender"
+        subject: "Subject"
+        original_date: "Original Date"
+        file_size: "File Size"
+        content_type: "Content Type"
+        checksum: "Checksum (MD5)"
+        uploaded_at: "Uploaded At"
+        not_processed: "Not processed yet"
+      processing_history:
+        title: "Processing History"
+        empty: "No processing logs yet. Click 'Reprocess Email' to start processing this file."
+        columns:
+          status: "Status"
+          parser_used: "Parser Used"
+          customer: "Customer"
+          processed_at: "Processed At"
+          actions: "Actions"
+      file_actions:
+        title: "File Actions"
+        download: "Download File"
+        reprocess: "Reprocess Email"
+        reprocess_confirm: "Are you sure you want to reprocess this email?"
+        no_file: "No file attached"
+        file_info:
+          filename: "Filename:"
+          size: "Size:"
+          type: "Type:"
+      quick_actions:
+        title: "Quick Actions"
+        upload_new: "Upload New Email"
+        view_logs: "View All Logs"
+        view_customers: "View All Customers"
